@@ -40,6 +40,6 @@ I analyzed real information about 30 college students - their test scores, ages,
 
 ## Why This Matters
 
-Learning to do statistics by hand first helped me understand what the computer is actually doing. Plus my professor made us do it this way! But now I can use both manual methods and modern software.
+Learning to do statistics by hand first helped me understand what the computer is actually doing. 
 
 **Just click the links above to see what I made!** 🎓

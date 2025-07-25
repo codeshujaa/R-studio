@@ -1,4 +1,4 @@
-# My Statistics Homework 📊
+# My Statistics Work 📊
 
 ## Click Here to See My Work!
 

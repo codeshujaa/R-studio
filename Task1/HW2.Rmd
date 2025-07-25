@@ -1,6 +1,8 @@
 ---
 title: "Basic statistics calculations"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2025-0-25"
 ---
 

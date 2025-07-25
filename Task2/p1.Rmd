@@ -1,0 +1,149 @@
+---
+title: "Project 1"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Project 1: Mean, Median, and Standard Deviation
+
+## loading the dataset
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(knitr)
+```
+
+```{r}
+# Import dataset
+intimidation_data <- read.csv("intimidation.csv", header = TRUE)
+head(intimidation_data)
+```
+### This calculates mean, median, and standard deviation for each variable using all students.
+```{r}
+# Calculate mean, median, and standard deviation for interval/ratio variables
+final_stats <- data.frame(
+  Variable = "Final",
+  Mean = mean(intimidation_data$Final, na.rm = TRUE),
+  Median = median(intimidation_data$Final, na.rm = TRUE),
+  SD = sd(intimidation_data$Final, na.rm = TRUE)
+)
+```
+
+```{r}
+# IntimBF scores  
+intimbf_stats <- data.frame(
+  Variable = "IntimBF",
+  Mean = mean(intimidation_data$IntimBF, na.rm = TRUE),
+  Median = median(intimidation_data$IntimBF, na.rm = TRUE),
+  SD = sd(intimidation_data$IntimBF, na.rm = TRUE)
+)
+
+# IntimAF scores
+intimaf_stats <- data.frame(
+  Variable = "IntimAF", 
+  Mean = mean(intimidation_data$IntimAF, na.rm = TRUE),
+  Median = median(intimidation_data$IntimAF, na.rm = TRUE),
+  SD = sd(intimidation_data$IntimAF, na.rm = TRUE)
+)
+
+#  results
+full_dataset_stats <- rbind(final_stats, intimbf_stats, intimaf_stats)
+kable(full_dataset_stats, digits = 3)
+```
+#### These three variable show the average, middle value, and spread out the data is. Final exam scores vary the most. IntimAF scores are most similar to each other.
+
+
+
+### This separates students by year level and calculates the same statistics for each group.
+```{r}
+# Calculate mean, median, and standard deviation by Year
+# Freshman (FR)
+fr_data <- filter(intimidation_data, Year == "FR")
+fr_stats <- data.frame(
+  Year = "FR",
+  Variable = c("Final", "IntimBF", "IntimAF"),
+  Mean = c(mean(fr_data$Final, na.rm = TRUE),
+           mean(fr_data$IntimBF, na.rm = TRUE), 
+           mean(fr_data$IntimAF, na.rm = TRUE)),
+  Median = c(median(fr_data$Final, na.rm = TRUE),
+             median(fr_data$IntimBF, na.rm = TRUE),
+             median(fr_data$IntimAF, na.rm = TRUE)),
+  SD = c(sd(fr_data$Final, na.rm = TRUE),
+         sd(fr_data$IntimBF, na.rm = TRUE),
+         sd(fr_data$IntimAF, na.rm = TRUE))
+)
+
+# Sophomore (SO)
+so_data <- filter(intimidation_data, Year == "SO")
+so_stats <- data.frame(
+  Year = "SO",
+  Variable = c("Final", "IntimBF", "IntimAF"),
+  Mean = c(mean(so_data$Final, na.rm = TRUE),
+           mean(so_data$IntimBF, na.rm = TRUE),
+           mean(so_data$IntimAF, na.rm = TRUE)),
+  Median = c(median(so_data$Final, na.rm = TRUE),
+             median(so_data$IntimBF, na.rm = TRUE),
+             median(so_data$IntimAF, na.rm = TRUE)),
+  SD = c(sd(so_data$Final, na.rm = TRUE),
+         sd(so_data$IntimBF, na.rm = TRUE),
+         sd(so_data$IntimAF, na.rm = TRUE))
+)
+
+# Junior (JR)
+jr_data <- filter(intimidation_data, Year == "JR")
+jr_stats <- data.frame(
+  Year = "JR",
+  Variable = c("Final", "IntimBF", "IntimAF"),
+  Mean = c(mean(jr_data$Final, na.rm = TRUE),
+           mean(jr_data$IntimBF, na.rm = TRUE),
+           mean(jr_data$IntimAF, na.rm = TRUE)),
+  Median = c(median(jr_data$Final, na.rm = TRUE),
+             median(jr_data$IntimBF, na.rm = TRUE),
+             median(jr_data$IntimAF, na.rm = TRUE)),
+  SD = c(sd(jr_data$Final, na.rm = TRUE),
+         sd(jr_data$IntimBF, na.rm = TRUE),
+         sd(jr_data$IntimAF, na.rm = TRUE))
+)
+
+# Senior (SR) - if present in data
+sr_data <- filter(intimidation_data, Year == "SR")
+if(nrow(sr_data) > 0) {
+  sr_stats <- data.frame(
+    Year = "SR",
+    Variable = c("Final", "IntimBF", "IntimAF"),
+    Mean = c(mean(sr_data$Final, na.rm = TRUE),
+             mean(sr_data$IntimBF, na.rm = TRUE),
+             mean(sr_data$IntimAF, na.rm = TRUE)),
+    Median = c(median(sr_data$Final, na.rm = TRUE),
+               median(sr_data$IntimBF, na.rm = TRUE),
+               median(sr_data$IntimAF, na.rm = TRUE)),
+    SD = c(sd(sr_data$Final, na.rm = TRUE),
+           sd(sr_data$IntimBF, na.rm = TRUE),
+           sd(sr_data$IntimAF, na.rm = TRUE))
+  )
+  
+  by_year_stats <- rbind(fr_stats, so_stats, jr_stats, sr_stats)
+} else {
+  by_year_stats <- rbind(fr_stats, so_stats, jr_stats)
+}
+
+kable(by_year_stats, digits = 3)
+```
+
+#### Sophomores scored highest on final exams. Freshmen had the most intimidation before treatment. All year groups showed less intimidation after treatment.
+
+
+
+
+
+
+## APA Write Up (.5p)
+This study examined three key variables: Final exam scores, Intimidation Before treatment (IntimBF), and Intimidation After treatment (IntimAF). The analysis looked at the entire group of students and then broke down results by each year in college.
+Looking at all students together, Final exam scores had an average of M = 79.39, SD = 9.42, Mdn = 80.15. Students' intimidation levels before treatment averaged M = 6.99, SD = 0.33, Mdn = 6.99. After treatment, intimidation levels averaged M = 3.93, SD = 0.27, Mdn = 3.94.
+
+When comparing students by year in college, clear differences appeared. For Final exam scores, Freshmen averaged M = 75.36, SD = 7.10, while Sophomores scored highest with M = 84.02, SD = 10.71. Juniors averaged M = 77.36, SD = 8.94, and Seniors averaged M = 80.52, SD = 8.71.
+Before treatment, intimidation levels were similar across years: Freshmen (M = 7.12, SD = 0.28), Sophomores (M = 6.98, SD = 0.28), Juniors (M = 6.99, SD = 0.29), and Seniors (M = 7.12, SD = 0.39). After treatment, intimidation dropped for all groups: Freshmen (M = 4.12, SD = 0.23), Sophomores (M = 3.98, SD = 0.20), Juniors (M = 3.87, SD = 0.26), and Seniors (M = 3.98, SD = 0.25).
+
+The results show that Sophomores performed best on final exams, while Freshmen started with the highest intimidation levels. All year groups showed reduced intimidation after treatment.
